@@ -33,7 +33,7 @@ public class TestServirCervezaIA {
         assertEquals(50.0, valor, DELTA);
 
         // Se debe haber descontado la cantidad servida.
-        assertEquals(8900.0, maquina.getCantidadActual(), DELTA);
+        assertEquals(8800.0, maquina.getCantidadActual(), DELTA);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class TestServirCervezaIA {
         assertEquals(10.0, valor, DELTA);
 
         // La cantidad actual debe disminuir de 9900 ml a 9400 ml.
-        assertEquals(9400.0, maquina.getCantidadActual(), DELTA);
+        assertEquals(9300.0, maquina.getCantidadActual(), DELTA);
     }
 
     @Test
@@ -82,27 +82,33 @@ public class TestServirCervezaIA {
         assertEquals(0.0, maquina.getCantidadActual(), DELTA);
     }
 
+ 
     @Test
     public void testServirExactamenteTodaLaCervezaDisponible() {
-        // Se utiliza el constructor simple.
-        Maquina maquina = new Maquina("0004",
+
+        // Se utiliza el constructor simple de la nueva clase Maquina.
+        Maquina maquina = new Maquina(
+                "0004",
                 "Cerveza Artesanal",
                 "Cerveza IPA",
                 0.04
         );
 
-        // La máquina queda con 9900 ml.
+        // La máquina tiene una capacidad máxima predeterminada de 10000 ml.
+        // Al llenarla, queda disponible: 10000 - 200 = 9800 ml.
         maquina.llenarMaquina();
 
-        // Se solicita exactamente toda la cantidad disponible.
-        double valor = maquina.cervirCerveza(9900);
+        // Se solicita exactamente toda la cerveza disponible.
+        double valor = maquina.cervirCerveza(9800);
 
-        // 9900 ml * 0.04 dólares/ml = 396 dólares.
-        assertEquals(396.0, valor, DELTA);
+        // 9800 ml * 0.04 dólares/ml = 392 dólares.
+        assertEquals(392.0, valor, DELTA);
 
-        // Después de servir toda la cerveza, deben quedar 0 ml.
+        // Después de servir toda la cerveza disponible,
+        // la cantidad actual debe quedar en 0 ml.
         assertEquals(0.0, maquina.getCantidadActual(), DELTA);
     }
+
 
     @Test
     public void testServirUnaCantidadMenorQueLaDisponible() {
@@ -124,7 +130,7 @@ public class TestServirCervezaIA {
         assertEquals(10.0, valor, DELTA);
 
         // Deben quedar 1900 ml.
-        assertEquals(1900.0, maquina.getCantidadActual(), DELTA);
+        assertEquals(1800.0, maquina.getCantidadActual(), DELTA);
     }
 
     @Test
