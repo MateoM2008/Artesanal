@@ -1,0 +1,30 @@
+package com.krakedev.artesanal.testJunit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import com.krakedev.artesanal.Maquina;
+
+public class testRecargarJUnit {
+
+	@Test
+	public void testRecargaExitosa() {
+		Maquina rubia = new Maquina("0001","pilcener", "cerveza", 0.02, 8000);
+		boolean resultado = rubia.recargarCerveza(3000);
+		assertTrue(resultado);
+		assertEquals(3000, rubia.getCantidadActual(), 0.0001);
+	}
+	
+	
+	@Test
+	public void testRecargaFallidaPorDesvorde() {
+		Maquina negra = new Maquina("0002","club", "cerveza fria", 0.03, 8000);
+		negra.recargarCerveza(7000);
+		boolean resultado = negra.recargarCerveza(1000);
+		
+		assertTrue(resultado);
+		assertEquals(3000, negra.getCantidadActual(), 0.0001);
+	}
+}
