@@ -7,6 +7,7 @@ public class Maquina {
 	private double capacidadMaxima;
 	private double cantidadActual;
 	private String codigo;
+	
 
 	public Maquina(String codigo, String nombreCerveza, String descripcion, double precioPorMl,
 			double capacidadMaxima) {
