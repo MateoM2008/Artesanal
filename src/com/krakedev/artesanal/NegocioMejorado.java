@@ -44,7 +44,7 @@ public class NegocioMejorado {
 	public Maquina recuperarMaquina(String codigo) {
 		for (int i = 0; i < maquinas.size(); i++) {
 			Maquina m = maquinas.get(i);
-			if (m.getCodigo() == codigo) {
+			if (m.getCodigo().equals(codigo)) {
 				return m;
 			}
 		}
@@ -58,23 +58,45 @@ public class NegocioMejorado {
 		clientes.add(c);
 	}
 
-	public Cliente buscarClientePoCedula(String cedula) {
-		for(int i=0;i<clientes.size();i++) {
-			Cliente c=clientes.get(i);
-			if(c.getCedula()==cedula) {
+	public Cliente buscarClientePorCedula(String cedula) {
+		for (int i = 0; i < clientes.size(); i++) {
+			Cliente c = clientes.get(i);
+			if (c.getCedula().equals(cedula)) {
 				return c;
 			}
 		}
 		return null;
 	}
-	
+
 	public Cliente buscarClientePoCodigo(int codigo) {
-		for(int i=0;i<clientes.size();i++) {
-			Cliente c=clientes.get(i);
-			if(c.getCodigo()==codigo) {
+		for (int i = 0; i < clientes.size(); i++) {
+			Cliente c = clientes.get(i);
+			if (c.getCodigo() == codigo) {
 				return c;
 			}
 		}
 		return null;
+	}
+
+	public void consumirCerveza(int codigoCliente, String codigoMaquina, double cantidad) {
+		Maquina m = recuperarMaquina(codigoMaquina);
+		Cliente c = buscarClientePoCodigo(codigoCliente);
+		if (m != null && c != null) {
+	        double consumo = m.cervirCerveza(cantidad);
+	        registrasConsumo(c, consumo);
+	    }
+	}
+
+	public void registrasConsumo(Cliente cliente, double valor) {
+		cliente.setTotalConsumir(cliente.getTotalConsumir()+valor);
+	}
+	
+	public double consultarValorVendido() {
+		double valor=0;
+		for(int i=0;i<clientes.size();i++) {
+			Cliente c=clientes.get(i);
+			valor=valor+c.getTotalConsumir();
+		}
+		return valor;
 	}
 }
